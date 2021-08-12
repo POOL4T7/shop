@@ -4,16 +4,18 @@ import mongoDB from "./config/db.js";
 import colors from "colors";
 //import routes
 import productRoutes from "./routes/productRoute.js";
+import userRoutes from "./routes/userRoute.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 dotenv.config();
 const app = express();
 mongoDB();
-
+app.use(express.json());
 //routes middleware
 app.get("/", (req, res) => {
   res.send("hii");
 });
 app.use("/api/products", productRoutes);
+app.use("/api/users", userRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
