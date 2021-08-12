@@ -1,18 +1,22 @@
-const express = require("express");
-const products = require("./products");
-require("dotenv").config();
+import express from "express";
+import dotenv from "dotenv";
+import mongoDB from "./config/db.js";
+import colors from "colors";
+//import routes
+import productRoutes from "./routes/productRoute.js";
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
+dotenv.config();
 const app = express();
+mongoDB();
 
+//routes middleware
 app.get("/", (req, res) => {
   res.send("hii");
 });
-app.get("/api/products", (req, res) => {
-  res.json(products);
-});
-app.get("/api/products/:id", (req, res) => {
-  const product = products.find((p) => p._id === req.params.id);
-  res.json(product);
-});
+app.use("/api/products", productRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 const port = process.env.PORT || 5000;
 
