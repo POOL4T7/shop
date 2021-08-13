@@ -8,6 +8,9 @@ import CartScreen from "./screens/CartScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import ShippingScreen from "./screens/ShippingScreen";
+import PaymentScreen from "./screens/PaymentScreen";
+import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
         <Container>
           <Route path="/login" exact component={LoginScreen} />
           <Route path="/register" exact component={RegisterScreen} />
+          <Route path="/shipping" exact component={ShippingScreen} />
+          <Route path="/payment" exact component={PaymentScreen} />
+          <Route path="/placeorder" exact component={PlaceOrderScreen} />
           <Route path="/profile" exact component={ProfileScreen} />
           <Route path="/product/:id" exact component={ProductScreen} />
           <Route path="/cart/:id?" component={CartScreen} />
