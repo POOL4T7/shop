@@ -7,7 +7,7 @@ const orderSchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
-    oderitems: [
+    orderItems: [
       {
         name: { type: String, required: true },
         qty: { type: Number, required: true },
@@ -32,7 +32,7 @@ const orderSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    paymentresult: {
+    paymentResult: {
       id: { type: String },
       status: { type: String },
       update_time: { type: String },
