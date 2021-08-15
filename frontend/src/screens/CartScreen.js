@@ -30,7 +30,6 @@ const CartScreen = ({ match, location, history }) => {
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id)); 
-    alert(`item removed of id ${id}`);
   };
   const checkouthandler = () => {
     history.push("/login?redirect=shipping");
