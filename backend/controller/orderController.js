@@ -50,7 +50,7 @@ export const getOrderById = asynchandler(async (req, res) => {
 });
 
 // @desc    update order to paid
-// @router GET /api/orders/:id/paid
+// @router POST /api/orders/:id/paid
 // @access private
 export const updateOrderToPaid = asynchandler(async (req, res) => {
   const order = await Order.findById({ _id: req.params.id });
@@ -85,4 +85,20 @@ export const getMyOrders = asynchandler(async (req, res) => {
 export const getOrders = asynchandler(async (req, res) => {
   const orders = await Order.find({});
   res.json(orders);
+});
+
+// @desc    update order to delivered
+// @router POST /api/orders/:id/delivered
+// @access private/admin
+export const updateOrderToDelivered = asynchandler(async (req, res) => {
+  const order = await Order.findById({ _id: req.params.id });
+  if (order) {
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+    const updateOrder = await order.save();
+    res.json(updateOrder);
+  } else {
+    res.status(404);
+    throw new Error("Order not found");
+  }
 });
