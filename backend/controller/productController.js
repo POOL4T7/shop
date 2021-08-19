@@ -2,11 +2,24 @@ import Product from "../models/productModel.js";
 import asynchandler from "express-async-handler";
 
 // @desc FETCH ALL PRODUCTS
-// @router /api/products/
+// @router /api/products?keyword=
 // @access public
 export const getProducts = asynchandler(async (req, res) => {
-  const products = await Product.find({});
-  res.json(products);
+  const pageSize = 20;
+  const page = Number(req.query.page) || 1;
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: "i",
+        },
+      }
+    : {};
+  const count = await Product.countDocuments({ ...keyword });
+  const products = await Product.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+  res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
 // @desc FETCH single product
@@ -111,4 +124,11 @@ export const createProductReview = asynchandler(async (req, res) => {
     res.status(404);
     throw new Error("Product not found");
   }
+});
+// @desc get top products
+// @router GET /api/products/top
+// @access public
+export const getTopProducts = asynchandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+  res.json(products);
 });
