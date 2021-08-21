@@ -1,12 +1,16 @@
 import asynchandler from "express-async-handler";
 import User from "../models/userModel.js";
-import { generateToken } from "../Utils/generateToken.js";
+import {
+  generateToken,
+  verify_google_reCaptcha,
+} from "../Utils/generateToken.js";
 
 // @desc  POST auth user and get token
 // @router POST /api/users/login
 // @access public
 export const authUser = asynchandler(async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, google_recaptcha_token } = req.body;
+  await verify_google_reCaptcha(google_recaptcha_token, res);
   const user = await User.findOne({ email });
 
   if (user && user.matchPassword(password)) {
@@ -26,7 +30,8 @@ export const authUser = asynchandler(async (req, res) => {
 // @router POST /api/users
 // @access public
 export const registerUser = asynchandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, google_recaptcha_token } = req.body;
+  await verify_google_reCaptcha(google_recaptcha_token, res);
   const userExists = await User.findOne({ email });
 
   if (userExists) {

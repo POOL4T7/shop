@@ -16,7 +16,6 @@ router.post("/", registerUser);
 router.post("/login", authUser);
 router.get("/profile", protect, userProfile);
 router.put("/profile", protect, updateUserProfile);
-
 //admin routes
 router.get("/", protect, isAdmin, getUsers);
 router.delete("/:id", protect, isAdmin, deleteUser);
