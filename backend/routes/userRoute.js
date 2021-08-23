@@ -10,12 +10,27 @@ import {
   getUserById,
   updateUser,
 } from "../controller/userController.js";
-import { protect, isAdmin } from "../middleware/authMiddleware.js";
+import {
+  protect,
+  isAdmin,
+  runValidation,
+} from "../middleware/authMiddleware.js";
+import {
+  signinValidator,
+  signupValidator,
+  profileValidator,
+} from "../validators/userValidators.js";
 
-router.post("/", registerUser);
-router.post("/login", authUser);
+router.post("/", signupValidator, runValidation, registerUser);
+router.post("/login", signinValidator, runValidation, authUser);
 router.get("/profile", protect, userProfile);
-router.put("/profile", protect, updateUserProfile);
+router.put(
+  "/profile",
+  profileValidator,
+  runValidation,
+  protect,
+  updateUserProfile
+);
 //admin routes
 router.get("/", protect, isAdmin, getUsers);
 router.delete("/:id", protect, isAdmin, deleteUser);

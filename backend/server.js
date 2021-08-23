@@ -29,10 +29,6 @@ app.get("/api/config/paypal", (req, res) =>
   res.json(process.env.PAYPAL_CLIENT_ID)
 );
 
-app.get("/api/config/recaptcha", (req, res) =>
-  res.json(process.env.RECAPTCHA_SITE_KEY)
-);
-
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 

@@ -50,6 +50,7 @@ export const deleteProductById = asynchandler(async (req, res) => {
     throw new Error("Product not found");
   }
 });
+
 // @desc create new product
 // @router DELETE /api/products
 // @access Private/Admin
@@ -68,6 +69,7 @@ export const createProduct = asynchandler(async (req, res) => {
   const savedProduct = await product.save();
   res.status(201).json(savedProduct);
 });
+
 // @desc update product
 // @router PUT /api/products/:id
 // @access Private/Admin
@@ -125,6 +127,7 @@ export const createProductReview = asynchandler(async (req, res) => {
     throw new Error("Product not found");
   }
 });
+
 // @desc get top products
 // @router GET /api/products/top
 // @access public

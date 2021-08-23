@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
 import asynchandler from "express-async-handler";
+import { validationResult } from "express-validator";
 
 export const protect = asynchandler(async (req, res, next) => {
   let token;
@@ -30,4 +31,13 @@ export const isAdmin = (req, res, next) => {
     res.status(401);
     throw new Error("Not authorized as admin");
   }
+};
+
+export const runValidation = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(422);
+    throw new Error(errors.array()[0].msg);
+  }
+  next();
 };

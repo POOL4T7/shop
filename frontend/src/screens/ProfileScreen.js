@@ -7,7 +7,7 @@ import { getUserDetails, updateUserProfile } from "../actions/userActions";
 import { listMyOrders } from "../actions/orderActions";
 import { LinkContainer } from "react-router-bootstrap";
 
-const ProfileScreen = ({ location, history }) => {
+const ProfileScreen = ({ history }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +19,7 @@ const ProfileScreen = ({ location, history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const userProfileUpdate = useSelector((state) => state.userProfileUpdate);
-  const { success } = userProfileUpdate;
+  const { success, error: profileUpdateError } = userProfileUpdate;
   const orderListMy = useSelector((state) => state.orderListMy);
   const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
 
@@ -50,6 +50,9 @@ const ProfileScreen = ({ location, history }) => {
         <Col md={3}>
           <h1>User Profile</h1>
           {message && <Message variant="danger">{message}</Message>}
+          {profileUpdateError && (
+            <Message variant="danger">{profileUpdateError}</Message>
+          )}
           {success && (
             <Message variant="success">Profile updated successfully</Message>
           )}

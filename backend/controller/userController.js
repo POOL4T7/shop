@@ -1,19 +1,15 @@
 import asynchandler from "express-async-handler";
 import User from "../models/userModel.js";
-import {
-  generateToken,
-  verify_google_reCaptcha,
-} from "../Utils/generateToken.js";
+import { generateToken, verify_google_reCaptcha } from "../Utils/utils.js";
 
 // @desc  POST auth user and get token
 // @router POST /api/users/login
 // @access public
 export const authUser = asynchandler(async (req, res) => {
   const { email, password, google_recaptcha_token } = req.body;
-  await verify_google_reCaptcha(google_recaptcha_token, res);
-  const user = await User.findOne({ email });
-
-  if (user && user.matchPassword(password)) {
+  verify_google_reCaptcha(google_recaptcha_token, res);
+  const user = await User.findOne({ email }).exec();
+  if (user && (await user.matchPassword(password))) {
     return res.json({
       _id: user.id,
       name: user.name,
@@ -22,29 +18,26 @@ export const authUser = asynchandler(async (req, res) => {
       token: generateToken(user._id),
     });
   }
-
   res.status(404);
   throw new Error("Invalid email or password");
 });
+
 // @desc  POST register new user
 // @router POST /api/users
 // @access public
 export const registerUser = asynchandler(async (req, res) => {
   const { name, email, password, google_recaptcha_token } = req.body;
-  await verify_google_reCaptcha(google_recaptcha_token, res);
-  const userExists = await User.findOne({ email });
-
+  verify_google_reCaptcha(google_recaptcha_token, res);
+  const userExists = await User.findOne({ email }).exec();
   if (userExists) {
     res.status(400);
     throw new Error("user already exists");
   }
-
   const user = await User.create({
     name,
     email,
     password,
   });
-
   if (user) {
     res.status(201).json({
       _id: user.id,
@@ -57,7 +50,6 @@ export const registerUser = asynchandler(async (req, res) => {
     res.status(400);
     throw new Error("invalid user data");
   }
-
   res.status(404);
   throw new Error("Invalid email or password");
 });
@@ -66,7 +58,7 @@ export const registerUser = asynchandler(async (req, res) => {
 // @router GET /api/users/profile
 // @access private
 export const userProfile = asynchandler(async (req, res) => {
-  const user = await User.findById({ _id: req.user._id });
+  const user = await User.findById({ _id: req.user._id }).exec();
   if (user) {
     return res.json({
       _id: user.id,
@@ -83,7 +75,7 @@ export const userProfile = asynchandler(async (req, res) => {
 // @router  POST /api/users/:id
 // @access Private
 export const updateUserProfile = asynchandler(async (req, res) => {
-  const user = await User.findById({ _id: req.user._id });
+  const user = await User.findById({ _id: req.user._id }).exec();
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
@@ -107,7 +99,7 @@ export const updateUserProfile = asynchandler(async (req, res) => {
 // @router GET /api/users
 // @access Private/Admin
 export const getUsers = asynchandler(async (req, res) => {
-  const users = await User.find({});
+  const users = await User.find({}).exec();
   res.json(users);
 });
 

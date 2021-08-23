@@ -32,7 +32,7 @@ const ProductScreen = ({ match, history }) => {
   const productReviewCreate = useSelector((state) => state.productReviewCreate);
   const {
     success: sreviewSuccess,
-    loading: reviewLoading,
+    // loading: reviewLoading,
     error: reviewError,
   } = productReviewCreate;
   useEffect(() => {
