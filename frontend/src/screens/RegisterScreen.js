@@ -48,6 +48,7 @@ const RegisterScreen = ({ location, history }) => {
               type="text"
               placeholder="Enter full name"
               value={name}
+              autoFocus
               onChange={(e) => setName(e.target.value)}
             />
           </Form.Group>

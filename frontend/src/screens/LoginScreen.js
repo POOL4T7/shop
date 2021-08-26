@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createRef } from "react";
 import { Row, Col, Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,14 +9,13 @@ import FormContainer from "../components/FormConatiner";
 import ReCaptcha from "../components/ReCaptcha";
 
 const LoginScreen = ({ location, history }) => {
-  const recaptchaRef = React.createRef();
+  const recaptchaRef = createRef();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const redirect = location.search ? location.search.split("=")[1] : "/";
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
-
   useEffect(() => {
     if (userInfo) {
       history.push(redirect);
@@ -40,10 +39,10 @@ const LoginScreen = ({ location, history }) => {
               type="email"
               placeholder="Enter email"
               value={email}
+              autoFocus
               onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="password">
             <Form.Label>Password</Form.Label>
             <Form.Control
@@ -59,10 +58,11 @@ const LoginScreen = ({ location, history }) => {
         </Form>
         <Row className="py-3">
           <Col>
-            New Customer ?
+            New Customer?
             <Link
               to={redirect ? `/register?redirect?=${redirect}` : "/register"}
             >
+              {" "}
               Register
             </Link>
           </Col>

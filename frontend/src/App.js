@@ -1,7 +1,7 @@
 import Hearder from "./components/Hearder";
 import Footer from "./components/Footer";
 import { Container } from "react-bootstrap";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
 import CartScreen from "./screens/CartScreen";
@@ -17,13 +17,14 @@ import UserEditScreen from "./screens/admin/UserEditScreen";
 import ProductListScreen from "./screens/admin/ProductListScreen";
 import ProductEditScreen from "./screens/admin/ProductEditScreen";
 import OrderListScreen from "./screens/admin/OrderListScreen";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
     <Router>
       <Hearder />
-      <main className="py-3">
-        <Container>
+      <Container className="py-3">
+        <Switch>
           <Route path="/login" exact component={LoginScreen} />
           <Route path="/register" exact component={RegisterScreen} />
           <Route path="/shipping" exact component={ShippingScreen} />
@@ -59,8 +60,9 @@ function App() {
             component={HomeScreen}
           />
           <Route path="/" exact component={HomeScreen} />
-        </Container>
-      </main>
+          <Route path="/*" exact component={NotFound} />
+        </Switch>
+      </Container>
       <Footer />
     </Router>
   );
