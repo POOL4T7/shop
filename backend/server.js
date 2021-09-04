@@ -28,6 +28,9 @@ app.use("/api/upload", uploadRoutes);
 app.get("/api/config/paypal", (req, res) =>
   res.json(process.env.PAYPAL_CLIENT_ID)
 );
+app.get("/api/config/stripe", (req, res) =>
+  res.json(process.env.STRIPE_API_KEY)
+);
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));

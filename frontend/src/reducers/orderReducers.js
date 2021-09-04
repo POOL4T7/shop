@@ -20,6 +20,10 @@ import {
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_FAIL,
   ORDER_DELIVER_RESET,
+  ORDER_PAY_BY_STRIPE_REQUEST,
+  ORDER_PAY_BY_STRIPE_SUCCESS,
+  ORDER_PAY_BY_STRIPE_FAIL,
+  ORDER_PAY_BY_STRIPE_RESET,
 } from "../constrants/orderConstrants";
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -85,6 +89,29 @@ export const orderPayReducer = (state = {}, action) => {
         error: action.payload,
       };
     case ORDER_PAY_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const orderPayByStripeReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_PAY_BY_STRIPE_REQUEST:
+      return {
+        loading: true,
+      };
+    case ORDER_PAY_BY_STRIPE_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case ORDER_PAY_BY_STRIPE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case ORDER_PAY_BY_STRIPE_RESET:
       return {};
     default:
       return state;

@@ -17,6 +17,9 @@ import {
   ORDER_DELIVER_REQUEST,
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_FAIL,
+  ORDER_PAY_BY_STRIPE_REQUEST,
+  ORDER_PAY_BY_STRIPE_SUCCESS,
+  ORDER_PAY_BY_STRIPE_FAIL,
 } from "../constrants/orderConstrants";
 import axios from "axios";
 
@@ -88,6 +91,36 @@ export const payOrder =
     } catch (error) {
       dispatch({
         type: ORDER_PAY_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const payOrderByStripe =
+  ({ orderId, paymentId, status }) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({ type: ORDER_PAY_BY_STRIPE_REQUEST });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.post(
+        `/api/orders/${orderId}/stripe/pay`,
+        { paymentId, status },
+        config
+      );
+      dispatch({ type: ORDER_PAY_BY_STRIPE_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: ORDER_PAY_BY_STRIPE_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

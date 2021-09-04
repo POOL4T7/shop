@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "install-packages":"npm install && npm install --prefix frontend",
+    "install-packages": "npm install && npm install --prefix frontend",
     "server": "nodemon backend/server",
     "client": "npm start --prefix frontend ",
     "start": "concurrently \"npm run server\" \"npm run client\"",
@@ -26,7 +26,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.6",
     "morgan": "^1.10.0",
-    "multer": "^1.4.3"
+    "multer": "^1.4.3",
+    "stripe": "^8.174.0"
   },
   "devDependencies": {
     "concurrently": "^6.2.1",

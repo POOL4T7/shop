@@ -184,17 +184,27 @@ const OrderScreen = ({ match, history }) => {
                 <Col>${order.totalPrice}</Col>
               </ListGroup.Item>
               {!order.isPaid && (
-                <ListGroup.Item>
-                  {loadingPay && <Loader />}
-                  {!sdkReady ? (
-                    <Loader />
-                  ) : (
-                    <PayPalButton
-                      amount={order.totalPrice}
-                      onSuccess={successPaymentHandler}
-                    />
-                  )}
-                </ListGroup.Item>
+                <>
+                  <ListGroup.Item>
+                    {loadingPay && <Loader />}
+                    {!sdkReady ? (
+                      <Loader />
+                    ) : (
+                      <PayPalButton
+                        amount={order.totalPrice}
+                        onSuccess={successPaymentHandler}
+                      />
+                    )}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    {loadingPay && <Loader />}
+                    <Link to={`/order/${order._id}/stripe/payment`}>
+                      <Button as="button" className="btn-block">
+                        Credit card
+                      </Button>
+                    </Link>
+                  </ListGroup.Item>
+                </>
               )}
               {loadingDeliver && <Loader />}
               {userInfo &&
