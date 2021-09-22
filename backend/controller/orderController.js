@@ -93,7 +93,7 @@ export const createStripe = asynchandler(async (req, res) => {
 // @desc    update order to paid
 // @router POST /api/orders/:id/paid
 // @access private
-export const updateOrderToPaidToStripe = asynchandler(async (req, res) => {
+export const updateOrderToPaidByStripe = asynchandler(async (req, res) => {
   const order = await Order.findById({ _id: req.params.id });
   if (order) {
     order.isPaid = true;

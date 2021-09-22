@@ -8,7 +8,7 @@ import {
   getOrders,
   updateOrderToDelivered,
   createStripe,
-  updateOrderToPaidToStripe,
+  updateOrderToPaidByStripe,
 } from "../controller/orderController.js";
 import { protect, isAdmin } from "../middleware/authMiddleware.js";
 
@@ -17,7 +17,7 @@ router.get("/myorders", protect, getMyOrders);
 router.get("/:id", protect, getOrderById);
 router.put("/:id/pay", protect, updateOrderToPaid);
 router.post("/stripe/process", protect, createStripe);
-router.post("/:id/stripe/pay", protect, updateOrderToPaidToStripe);
+router.post("/:id/stripe/pay", protect, updateOrderToPaidByStripe);
 
 //admin route
 router.get("/", protect, isAdmin, getOrders);
