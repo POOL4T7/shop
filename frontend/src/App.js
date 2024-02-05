@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import axios from "axios";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+// import axios from "axios";
+// import { Elements } from "@stripe/react-stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 import Hearder from "./components/Hearder";
 import Footer from "./components/Footer";
 import HomeScreen from "./screens/HomeScreen";
@@ -22,17 +22,17 @@ import ProductListScreen from "./screens/admin/ProductListScreen";
 import ProductEditScreen from "./screens/admin/ProductEditScreen";
 import OrderListScreen from "./screens/admin/OrderListScreen";
 import NotFound from "./components/NotFound";
-import StripeScreen from "./screens/StripeScreen";
+// import StripeScreen from "./screens/StripeScreen";
 
 function App() {
-  const [stripeApiKey, setStripeApiKey] = useState("");
-  useEffect(() => {
-    async function getStripeApiKey() {
-      const { data } = await axios.get("/api/config/stripe");
-      setStripeApiKey(data);
-    }
-    getStripeApiKey();
-  }, []);
+  // const [stripeApiKey, setStripeApiKey] = useState("");
+  // useEffect(() => {
+  //   async function getStripeApiKey() {
+  //     const { data } = await axios.get("/api/config/stripe");
+  //     setStripeApiKey(data);
+  //   }
+  //   getStripeApiKey();
+  // }, []);
   return (
     <Router>
       <Hearder />
@@ -42,13 +42,13 @@ function App() {
           <Route path="/register" exact component={RegisterScreen} />
           <Route path="/shipping" exact component={ShippingScreen} />
           <Route path="/payment" exact component={PaymentScreen} />
-          {stripeApiKey && (
+          {/* {stripeApiKey && (
             <Route path="/order/:id/stripe/payment" exact>
               <Elements stripe={loadStripe(stripeApiKey)}>
                 <StripeScreen />
               </Elements>
             </Route>
-          )}
+          )} */}
           <Route path="/placeorder" exact component={PlaceOrderScreen} />
           <Route path="/order/:id" exact component={OrderScreen} />
           <Route path="/profile" exact component={ProfileScreen} />

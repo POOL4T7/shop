@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import {
   getOrderDetails,
-  payOrder,
+  // payOrder,
   deliverOrder,
 } from "../actions/orderActions";
-import { PayPalButton } from "react-paypal-button-v2";
+// import { PayPalButton } from "react-paypal-button-v2";
 import {
   ORDER_PAY_RESET,
   ORDER_DELIVER_RESET,
@@ -19,7 +19,7 @@ import {
 const OrderScreen = ({ match, history }) => {
   const dispatch = useDispatch();
   const orderId = match.params.id;
-  const [sdkReady, setSdkready] = useState(false);
+  // const [sdkReady, setSdkready] = useState(false);
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { loading, error, order } = orderDetails;
@@ -38,7 +38,7 @@ const OrderScreen = ({ match, history }) => {
     );
   }
   const orderPay = useSelector((state) => state.orderPay);
-  const { success: successPay, loading: loadingPay } = orderPay;
+  const { success: successPay, /*loading: loadingPay*/ } = orderPay;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   //order deliver details
@@ -49,34 +49,35 @@ const OrderScreen = ({ match, history }) => {
     if (!userInfo) {
       history.push("/login");
     }
-    const addPayPalScript = async () => {
-      const { data: clientId } = await axios.get("/api/config/paypal");
-      const script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
-      script.async = true;
-      script.onload = () => {
-        setSdkready(true);
-      };
-      document.body.appendChild(script);
-    };
+    // const addPayPalScript = async () => {
+    //   const { data: clientId } = await axios.get("/api/config/paypal");
+    //   const script = document.createElement("script");
+    //   script.type = "text/javascript";
+    //   script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
+    //   script.async = true;
+    //   script.onload = () => {
+    //     setSdkready(true);
+    //   };
+    //   document.body.appendChild(script);
+    // };
     if (!order || order._id !== orderId || successPay || successDeliver) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(getOrderDetails(orderId));
-    } else if (!order.isPaid) {
-      if (!window.paypal) {
-        addPayPalScript();
-      } else {
-        setSdkready(true);
-      }
-    }
+    } 
+    // else if (!order.isPaid) {
+    //   if (!window.paypal) {
+    //     addPayPalScript();
+    //   } else {
+    //     setSdkready(true);
+    //   }
+    // }
   }, [dispatch, history, order, orderId, successDeliver, successPay, userInfo]);
 
-  const successPaymentHandler = (paymentResult) => {
-    console.log(paymentResult);
-    dispatch(payOrder(orderId, paymentResult));
-  };
+  // const successPaymentHandler = (paymentResult) => {
+  //   console.log(paymentResult);
+  //   dispatch(payOrder(orderId, paymentResult));
+  // };
 
   const deliverhandler = () => {
     dispatch(deliverOrder(orderId));
@@ -183,7 +184,7 @@ const OrderScreen = ({ match, history }) => {
                 <Col>Total</Col>
                 <Col>${order.totalPrice}</Col>
               </ListGroup.Item>
-              {!order.isPaid && (
+              {/* {!order.isPaid && (
                 <>
                   <ListGroup.Item>
                     {loadingPay && <Loader />}
@@ -205,7 +206,7 @@ const OrderScreen = ({ match, history }) => {
                     </Link>
                   </ListGroup.Item>
                 </>
-              )}
+              )} */}
               {loadingDeliver && <Loader />}
               {userInfo &&
                 userInfo.isAdmin &&

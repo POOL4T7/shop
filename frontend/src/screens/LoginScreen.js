@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,10 +6,10 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { login } from "../actions/userActions";
 import FormContainer from "../components/FormConatiner";
-import ReCaptcha from "../components/ReCaptcha";
+// import ReCaptcha from "../components/ReCaptcha";
 
 const LoginScreen = ({ location, history }) => {
-  const recaptchaRef = createRef();
+  // const recaptchaRef = createRef();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const redirect = location.search ? location.search.split("=")[1] : "/";
@@ -23,7 +23,7 @@ const LoginScreen = ({ location, history }) => {
   }, [history, redirect, userInfo]);
   const submithandler = async (e) => {
     e.preventDefault();
-    const google_recaptcha_token = await recaptchaRef.current.executeAsync();
+    const google_recaptcha_token = "";//await recaptchaRef.current.executeAsync();
     dispatch(login(email, password, google_recaptcha_token));
   };
   return (
@@ -68,7 +68,7 @@ const LoginScreen = ({ location, history }) => {
           </Col>
         </Row>
       </FormContainer>
-      <ReCaptcha recaptchaRef={recaptchaRef} />
+      {/* <ReCaptcha recaptchaRef={recaptchaRef} /> */}
     </>
   );
 };

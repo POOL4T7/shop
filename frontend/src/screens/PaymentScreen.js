@@ -33,7 +33,7 @@ const PaymentScreen = ({ history }) => {
               id="PayPal"
               name="paymentMethod"
               value="Paypal"
-              checked
+              disabled
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
             <Form.Check
@@ -42,6 +42,7 @@ const PaymentScreen = ({ history }) => {
               id="Stripe"
               name="paymentMethod"
               value="Stripe"
+              disabled
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
             <Form.Check
@@ -50,6 +51,7 @@ const PaymentScreen = ({ history }) => {
               id="COD"
               name="paymentMethod"
               value="COD"
+              checked
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
           </Col>

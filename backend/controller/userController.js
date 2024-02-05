@@ -7,7 +7,7 @@ import { generateToken, verify_google_reCaptcha } from "../Utils/utils.js";
 // @access public
 export const authUser = asynchandler(async (req, res) => {
   const { email, password, google_recaptcha_token } = req.body;
-  verify_google_reCaptcha(google_recaptcha_token, res);
+  // verify_google_reCaptcha(google_recaptcha_token, res);
   const user = await User.findOne({ email }).exec();
   if (user && (await user.matchPassword(password))) {
     return res.json({
@@ -27,7 +27,7 @@ export const authUser = asynchandler(async (req, res) => {
 // @access public
 export const registerUser = asynchandler(async (req, res) => {
   const { name, email, password, google_recaptcha_token } = req.body;
-  verify_google_reCaptcha(google_recaptcha_token, res);
+  // verify_google_reCaptcha(google_recaptcha_token, res);
   const userExists = await User.findOne({ email }).exec();
   if (userExists) {
     res.status(400);

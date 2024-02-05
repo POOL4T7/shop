@@ -6,10 +6,10 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { register } from "../actions/userActions";
 import FormContainer from "../components/FormConatiner";
-import ReCaptcha from "../components/ReCaptcha";
+// import ReCaptcha from "../components/ReCaptcha";
 
 const RegisterScreen = ({ location, history }) => {
-  const recaptchaRef = React.createRef();
+  // const recaptchaRef = React.createRef();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,7 +30,7 @@ const RegisterScreen = ({ location, history }) => {
     if (password !== confirmPassword) {
       setMessage("Password do not match");
     } else {
-      const google_recaptcha_token = await recaptchaRef.current.executeAsync();
+      const google_recaptcha_token = ''; //await recaptchaRef.current.executeAsync();
       dispatch(register(name, email, password, google_recaptcha_token));
     }
   };
@@ -93,7 +93,7 @@ const RegisterScreen = ({ location, history }) => {
           </Col>
         </Row>
       </FormContainer>
-      <ReCaptcha recaptchaRef={recaptchaRef} />
+      {/* <ReCaptcha recaptchaRef={recaptchaRef} /> */}
     </>
   );
 };
