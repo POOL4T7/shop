@@ -31,7 +31,7 @@ export const login =
   (email, password, google_recaptcha_token) => async (dispatch) => {
     try {
       dispatch({ type: USER_LOGIN_REQUEST });
-      const { data } = await axios.post("/api/users/login", {
+      const { data } = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/users/login`, {
         email,
         password,
         google_recaptcha_token,
@@ -53,7 +53,7 @@ export const register =
   (name, email, password, google_recaptcha_token) => async (dispatch) => {
     try {
       dispatch({ type: USER_REGISTER_REQUEST });
-      const { data } = await axios.post("/api/users", {
+      const { data } = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/users`, {
         name,
         email,
         password,
@@ -84,7 +84,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get("/api/users/profile", config);
+    const { data } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/users/profile`, config);
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -107,7 +107,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.put("/api/users/profile", user, config);
+    const { data } = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/users/profile`, user, config);
     dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
@@ -132,7 +132,7 @@ export const listUsers = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get("/api/users", config);
+    const { data } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/users`, config);
     dispatch({ type: USER_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -155,7 +155,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.delete(`/api/users/${id}`, config);
+    const { data } = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/api/users/${id}`, config);
     dispatch({ type: USER_DELETE_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -179,7 +179,7 @@ export const getUserById = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get(`/api/users/${id}`, config);
+    const { data } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/users/${id}`, config);
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -203,7 +203,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.put(`/api/users/${user._id}`, user, config);
+    const { data } = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/users/${user._id}`, user, config);
     dispatch({ type: USER_UPDATE_SUCCESS });
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
