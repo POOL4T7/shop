@@ -12,8 +12,8 @@ import orderRoutes from "./routes/orderRoutes.js";
 import uploadRoutes from "./routes/uploadRoute.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 dotenv.config();
-app.use(cors());
 const app = express();
+app.use(cors());
 
 
 
