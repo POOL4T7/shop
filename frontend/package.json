@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "proxy": "http://127.0.01:5000",
+  "proxy": "https://react-shop-server.onrender.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -26,8 +26,8 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "ENV NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "ENV NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
